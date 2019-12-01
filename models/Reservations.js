@@ -22,6 +22,4 @@ arrivalTime:{
 
 
 });
- module.exports=Reservation=mongoose.model('reservation',ReservationSchema);
-
-
+ module.exports=Reservation=mongoose.model('reservations',ReservationSchema);
