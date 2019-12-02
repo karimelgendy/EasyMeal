@@ -14,8 +14,8 @@ Restaurants.find()
         name : req.body.name,
         telephone : req.body.telephone ,
         availableTables : req.body.availableTables ,
-        busy : req.body.busy, 
-        waitingList : req.body.waitingList
+        busy : req.body.busy
+        
   });
  
        newRes.save().then(restaurants => res.json(restaurants));
@@ -36,8 +36,8 @@ router.delete ('/:id', (req,res) => {
         name : req.body.name,
          telephone : req.body.telephone,
          availableTables : req.body.availableTables,
-         busy : req.body.busy,
-         waitingList : req.body.waitingList
+         busy : req.body.busy
+         
  } );
             if (!updatedRestaurant)
               return res.status(404).send({ error: "Restaurant does not exist" });

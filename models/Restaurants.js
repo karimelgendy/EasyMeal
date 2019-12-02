@@ -18,11 +18,8 @@ availableTables:{
 busy:{
     type:Boolean,
     required:true
-},
-waitingList:{
-    type:Boolean,
-    required:true
 }
+
 
 });
 
