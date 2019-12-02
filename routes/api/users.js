@@ -1,5 +1,6 @@
 const Users= require('../../models/Users');
-
+const  express=require('express');
+const router = express.Router();
 //get all users
 router.get('/',(req,res)=>{
 Users.find()
@@ -10,8 +11,8 @@ Users.find()
 //create 
 router.post('/',(req,res) => {
         const newRes = new Users({
-        name = req.body.name,
-        email = req.body.email 
+        name : req.body.name,
+        email : req.body.email 
   });
  
          newRes.save().then(users => res.json(users));
@@ -24,4 +25,4 @@ router.delete ('/:id', (req,res) => {
         .catch(err => res.status(404).json({ success : false }));
  }); 
 
-module.export=router;
+module.exports=router;

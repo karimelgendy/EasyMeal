@@ -12,18 +12,18 @@ telephone:{
     required:true
 },
 availableTables:{
-    type:int,
+    type:Number,
     required:true
 },
 busy:{
-    type:boolean,
+    type:Boolean,
     required:true
 },
 waitingList:{
-    type:boolean,
+    type:Boolean,
     required:true
 }
 
 });
 
-module.exports=Restaurant=mongoose.model('restaurants',RestaurantSchema);
+module.exports=Restaurants=mongoose.model('restaurants',RestaurantSchema);

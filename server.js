@@ -21,7 +21,7 @@ mongoose
      .catch(err=> console.log(err));
 
      //Use routes
-    app.use('/api/restaurants',restaurants);
+    app.use('/api/restaurants', restaurants);
     app.use('/api/reservations',reservations);
     app.use('/api/users',users);
 

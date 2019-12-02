@@ -4,22 +4,22 @@ const Schema = mongoose.Schema;
 //create schema 
 const ReservationSchema=new Schema({
 restaurantName:{
-        type:boolean,
+        type:String,
         required:true
     },
 guestName:{
     type:String,
     required:true
 },
-numberOfPersons:{
-    type:int,
+ numberOfPersons:{
+     type:Number,
     required:true
-},
-arrivalTime:{
-    type:Date.now,
-    required:true
-}
+ },
+ arrivalTime:{
+     type:Date,
+     default:Date.now
+ }
 
 
 });
- module.exports=Reservation=mongoose.model('reservations',ReservationSchema);
+ module.exports=Reservations=mongoose.model('reservations',ReservationSchema);
