@@ -13,8 +13,7 @@ Restaurants.find()
         name : req.body.name,
         telephone : req.body.telephone ,
         availableTables : req.body.availableTables ,
-        busy : req.body.busy, 
-        waitingList : req.body.waitingList
+        busy : req.body.busy
   });
  
        newRes.save().then(restaurants => res.json(restaurants));
