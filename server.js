@@ -2,9 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const restaurant=require('./routes/api/restaurant');
-const reservation=require('./routes/api/reservation');
-const user=require('./routes/api/user');
+const restaurants=require('./routes/api/restaurants');
+const reservations=require('./routes/api/reservations');
+const users=require('./routes/api/users');
 
 const app = express();
 
@@ -21,9 +21,9 @@ mongoose
      .catch(err=> console.log(err));
 
      //Use routes
-    app.use('/api/restaurant',restaurant);
-    app.use('/api/reservation',reservation);
-    app.use('/api/user',user);
+    app.use('/api/restaurants',restaurants);
+    app.use('/api/reservations',reservations);
+    app.use('/api/users',users);
 
      const port =process.env.PORT || 5000;
      app.listen(port, () => console.log(`Server started on ${port}`));
