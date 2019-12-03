@@ -1,7 +1,11 @@
 const Users= require('../../models/Users');
+const Resataurant = require('../../models/Restaurants')
 const  express=require('express');
 const router = express.Router();
 var ObjectId = require('mongodb').ObjectID;
+const fetch = require("node-fetch");
+const Reservations = require('../../models/Reservations');
+const server = require("../../config/keys");
 //get all users
 router.get('/',(req,res)=>{
 Users.find()
@@ -45,6 +49,71 @@ router.delete ('/:id', (req,res) => {
           return res.status(404).send({ error: "User does not exist" });
         }
       });
+
+// as a user i want to reserve a table in a restaurant 
+router.post("/:uid/:rid/reserve/", async (req, res) => {
+  if (ObjectId.isValid(req.params.uid) && ObjectId.isValid(req.params.rid)) {
+    const user = await Users.findById(req.params.uid) ;
+    const resstaurant = await Resataurant.findById(req.params.rid);
+    if (user && resstaurant) {
+      if ( req.body.numberOfPersons != null ) {
+        var restaurantname = resstaurant.name;
+        var clientname= user.name;
+        const j = await PartnerRequestEvent(restaurantname,clientname,req.body.numberOfPersons,req.headers);
+        console.log(j);
+        res.json({ msg: "resrvation is done successfully" });
+      } else {
+        return res.status(400).send({ error: "body is missing attrubites" });
+      }
+    } else return res.status(404).send({ error: "user does not exist" });
+  } else return res.status(404).send({ error: "user does not exist" });
+});
+
+async function PartnerRequestEvent(restaurantname,clientname,numberOfPersons,headers) {
+  const body = {
+    restaurantName: restaurantname,
+    guestName: clientname,
+    numberOfPersons: numberOfPersons
+  };
+  var error = true;
+  var j;
+  await fetch(`http://localhost:5000/api/reservations/`, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "Reservation is created successfully" };
+      }
+      console.log(json);
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+  return j;
+}
+// as a user i want to check if the restaurant is busy or not
+router.get("/:uid/checkIfBusy/:rid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.uid) && ObjectId.isValid(req.params.rid)) {
+    const user = await Users.findById(req.params.uid);
+    const resstaurant = await Resataurant.findById(req.params.rid);
+    if (user) {
+      if (resstaurant) {
+        res.json(resstaurant.busy);
+      } else
+       return res.status(404).send({ error: "Restaurant does not exist" });
+    } else
+     return res.status(404).send({ error: "User does not exist" });
+  } 
+  else return res.status(404).send({ error: "Invalid Inputs" });
+});
+
 
 
 module.exports=router;
