@@ -6,6 +6,7 @@ var ObjectId = require('mongodb').ObjectID;
 const fetch = require("node-fetch");
 const Reservations = require('../../models/Reservations');
 const server = require("../../config/keys");
+rejectUnauthorized: false;
 //get all users
 router.get('/',(req,res)=>{
 Users.find()
@@ -99,21 +100,21 @@ async function PartnerRequestEvent(restaurantname,clientname,numberOfPersons,hea
   return j;
 }
 // as a user i want to check if the restaurant is busy or not
-router.get("/:uid/checkIfBusy/:rid/", async (req, res) => {
-  if (ObjectId.isValid(req.params.uid) && ObjectId.isValid(req.params.rid)) {
-    const user = await Users.findById(req.params.uid);
-    const resstaurant = await Resataurant.findById(req.params.rid);
+router.get("/:uid/SearchMAClocation", async (req, res) => {
+  if (ObjectId.isValid(req.params.uid)) {
+    const user = await Users.findById(req.params.uid) ;
     if (user) {
-      if (resstaurant) {
-        res.json(resstaurant.busy);
-      } else
-       return res.status(404).send({ error: "Restaurant does not exist" });
-    } else
-     return res.status(404).send({ error: "User does not exist" });
-  } 
-  else return res.status(404).send({ error: "Invalid Inputs" });
+      console.log("1");
+      console.log(req.params.uid);
+       fetch(`http://www.google.com/maps/search/?api=1&query=McDonald's`);
+      console.log("2");
+    } else {
+      return res.status(404).send({ error: "not a user id" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
 });
-
 
 
 module.exports=router;
