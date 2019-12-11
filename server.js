@@ -25,5 +25,9 @@ mongoose
     app.use('/api/reservations',reservations);
     app.use('/api/users',users);
 
+    app.get('/',(req,res)=>{
+         res.send("Welcome to homepage");
+    })
+
      const port =process.env.PORT || 5000;
-     app.listen(port, () => console.log(`Server started on ${port}`));
+     app.listen(port, () => console.log(`Server started on ${port} Check`));
